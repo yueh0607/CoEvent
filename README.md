@@ -57,8 +57,8 @@ public interface MyEvent: IGenericEvent<参数类型,参数类型...>
 public interface MyEvent: ISendEvent<...>
 //可调用(最后一个泛型参数是返回值)
 public interface MyEvent: ICallEvent<...>
+```
 
-```csharp
 
 3.注册和取消事件(MyAction也是被约束类型的)
 ``` csharp
