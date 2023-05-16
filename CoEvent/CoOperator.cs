@@ -1,23 +1,20 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using static UnityEngine.UI.CanvasScaler;
 
 namespace CoEvent
 {
-    public class CoOperator<T>:ICoVarOperator<T>
+    public class CoOperator<T> : ICoVarOperator<T>
     {
-        public List<Delegate> Events { get; private set; }=new();
-      
+        public List<Delegate> Events { get; private set; } = new();
+
         /// <summary>
         /// 委托数
         /// </summary>
         public int Count => Events.Count;
 
-        public int IntervalIndex{ get; private set; } = 0;
+        public int IntervalIndex { get; private set; } = 0;
 
- 
+
         /// <summary>
         /// 清空操作器
         /// </summary>
@@ -45,7 +42,7 @@ namespace CoEvent
         {
             if (IntervalIndex >= 0 && IntervalIndex < Events.Count)
             {
-        
+
                 dele = Events[IntervalIndex++];
                 return true;
             }

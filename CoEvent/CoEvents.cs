@@ -1,29 +1,25 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using UnityEngine;
-
 namespace CoEvent
 {
     public static class CoEvents
     {
         internal static Dictionary<Type, CoOperator<ICoEventBase>> container = new Dictionary<Type, CoOperator<ICoEventBase>>();
-        internal static HashSet<Type> removeMarks= new HashSet<Type>();
+        internal static HashSet<Type> removeMarks = new HashSet<Type>();
         public static void ReleaseEmpty()
         {
-            foreach(var con in container)
+            foreach (var con in container)
             {
-                if(con.Value.Count==0) removeMarks.Add(con.Key);
+                if (con.Value.Count == 0) removeMarks.Add(con.Key);
             }
-            foreach(var tp in removeMarks)
+            foreach (var tp in removeMarks)
             {
                 container.Remove(tp);
             }
         }
 
 
-        
+
     }
 
     public static class CoEventManagerEx1

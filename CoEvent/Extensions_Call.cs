@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
 
 namespace CoEvent
 {
@@ -12,7 +11,7 @@ namespace CoEvent
             var mop = container.GetOperator();
             List<T1> result = new();
 
-            while(mop.GetNext(out var dele))
+            while (mop.GetNext(out var dele))
             {
                 result.Add(((Func<T1>)dele).Invoke());
             }
@@ -27,7 +26,7 @@ namespace CoEvent
 
             while (mop.GetNext(out var dele))
             {
-                result.Add(((Func<T1,T2>)dele).Invoke(arg1));
+                result.Add(((Func<T1, T2>)dele).Invoke(arg1));
             }
             return result;
         }
