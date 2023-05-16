@@ -72,3 +72,28 @@ var results = this.Operator<消息类型接口>().Call(...参数们);
 ```
 
 
+## 三、例子
+```csharp
+using CoEvent;
+using UnityEngine;
+
+
+public interface IMyTest : ISendEvent<int, int> { }
+public class Test : MonoBehaviour
+{
+
+    void Ttt(int t,int k)
+    {
+        Debug.Log($"{t}:{k}");
+    }
+
+    void Start()
+    {
+        this.Operator<IMyTest>().Subscribe(Ttt);
+        this.Operator<IMyTest>().UnSubscribe(Ttt);
+        this.Operator<IMyTest>().Send(10,100);
+    }
+
+}
+```
+
