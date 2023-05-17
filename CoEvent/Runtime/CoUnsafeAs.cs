@@ -1,4 +1,5 @@
 ﻿
+using System.Diagnostics;
 using Unity.Collections.LowLevel.Unsafe;
 namespace CoEvent
 {
@@ -6,7 +7,7 @@ namespace CoEvent
 
     internal static class CoUnsafeAs
     {
-
+        [DebuggerHidden]
         internal static TTo As<TFrom, TTo>(ref TFrom t)
         {
 #if UNITY_2020_1_OR_NEWER

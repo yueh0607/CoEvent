@@ -1,4 +1,4 @@
-﻿
+﻿using CoEvent.Internal;
 using System;
 namespace CoEvent
 {

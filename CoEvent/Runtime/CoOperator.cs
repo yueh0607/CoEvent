@@ -1,5 +1,8 @@
-﻿using System;
+﻿using CoEvent.Internal;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Runtime.CompilerServices;
 
 namespace CoEvent
 {
@@ -61,6 +64,7 @@ namespace CoEvent
 
     internal static class CoV_EX
     {
+        [DebuggerHidden,MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static CoOperator<ICoEventBase> GetOperator<T>(this ICoVarOperator<T> ico)
         {
             return (CoOperator<ICoEventBase>)ico;

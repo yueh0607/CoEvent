@@ -1,10 +1,15 @@
-﻿namespace CoEvent
+﻿using CoEvent.Internal;
+
+//建议不要随便使用这个命名空间下的东西
+namespace CoEvent.Internal
 {
-#pragma warning disable
+
+    //基础接口是没法处理事件的，没有任何匹配的功能，简称没用
     public interface ICoEventBase { }
 
 
 
+    //泛型接口不够安全，能Send也能Call
     public interface IGenericEvent : ICoEventBase { }
     public interface IGenericEvent<T1> : ICoEventBase { }
     public interface IGenericEvent<T1, T2> : ICoEventBase { }
@@ -14,10 +19,18 @@
     public interface IGenericEvent<T1, T2, T3, T4, T5, T6> : ICoEventBase { }
 
 
-
+    //这两个是Base，也没能处理的事件，简称没用
     public interface ISendEventBase : ICoEventBase { }
 
     public interface ICallEventBase : ICoEventBase { }
+}
+
+
+namespace CoEvent
+{
+#pragma warning disable
+   
+
 
 
     public interface ISendEvent : ISendEventBase, IGenericEvent { }
