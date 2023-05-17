@@ -11,7 +11,7 @@ namespace CoEvent
         {
 #if UNITY_2020_1_OR_NEWER
             return UnsafeUtility.As<TFrom, TTo>(ref t);
-#elif NETCore
+#elif NETCORE
             return Unsafe.As<TFrom,TTo>(ref t);
 #else
 
