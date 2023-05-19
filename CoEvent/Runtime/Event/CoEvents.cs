@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using UnityEngine;
 
 namespace CoEvent
 {
@@ -21,7 +22,12 @@ namespace CoEvent
             }
         }
 
-
+        public static void InitPublisher()
+        {
+            GameObject publisher = new GameObject("CoEventPublisher");
+            GameObject.DontDestroyOnLoad(publisher);
+            publisher.AddComponent<CoEventPublisher>();
+        }
 
     }
 
