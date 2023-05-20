@@ -6,9 +6,8 @@
  */
 
 
-using System;
 using System.Collections.Generic;
-namespace CoEvent
+namespace CoEvent.Async
 {
     public static partial class Async
     {
@@ -83,7 +82,7 @@ namespace CoEvent
         public static CoTask WaitAny(List<CoTask> tasks)
         {
             //申请计数器
-            var counterCall =CounterCall.Create();
+            var counterCall = CounterCall.Create();
             //设置触发值
             counterCall.ClickValue = 1;
             //使用一次就自动回收

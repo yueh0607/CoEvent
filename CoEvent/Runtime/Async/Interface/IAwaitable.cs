@@ -5,7 +5,7 @@
  * 为了使抽象的编辑器要求变得具体，这里创建接口统一可等待的对象
  */
 
-namespace CoEvent
+namespace CoEvent.Async
 {
     /// <summary>
     /// 实现此接口使得一个对象可以被await关键字所支持

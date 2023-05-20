@@ -16,7 +16,7 @@ namespace CoEvent
             return Unsafe.As<TFrom,TTo>(ref t);
 #else
 
-        #error Unsupported platform!(请手动实现Unsafe.As或切换到支持的平台上)
+#error Unsupported platform!(请手动实现Unsafe.As或切换到支持的平台上)
 
 #endif
         }

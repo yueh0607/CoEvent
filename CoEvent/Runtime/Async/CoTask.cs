@@ -1,16 +1,12 @@
-﻿using CoEvent.Internal;
+﻿using CoEvent.Async.Internal;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Net;
 using System.Runtime.CompilerServices;
-using UnityEngine;
 
-namespace CoEvent
+namespace CoEvent.Async
 {
     [AsyncMethodBuilder(typeof(CoTaskBuilder))]
-    public class CoTask:IAsyncTask,IAsyncTokenProperty
+    public class CoTask : IAsyncTask, IAsyncTokenProperty
     {
         //在结束时调用，无论是否成功
         public event Action OnTaskCompleted = null;
@@ -19,9 +15,9 @@ namespace CoEvent
 
         public static CoTask Create()
         {
-            CoTask task=null;
-            if(CoEvents.Pool!=null) task= (CoTask)CoEvents.Pool.Allocate(typeof(CoTask));
-            else task= new CoTask();
+            CoTask task = null;
+            if (CoEvents.Pool != null) task = (CoTask)CoEvents.Pool.Allocate(typeof(CoTask));
+            else task = new CoTask();
 
             task.Token = new AsyncTreeTokenNode(task, task);
             task.Token.Current = task;
@@ -34,13 +30,13 @@ namespace CoEvent
         public static void Recycle(CoTask task)
         {
             task.Authorization = false;
-          
+
             if (CoEvents.Pool != null) return;
-            CoEvents.Pool?.Recycle(typeof(CoTask),task);
+            CoEvents.Pool?.Recycle(typeof(CoTask), task);
         }
 
 
-        private Action setResult= null;
+        private Action setResult = null;
         public Action SetResult
         {
             get
@@ -70,7 +66,7 @@ namespace CoEvent
 
         public void GetResult() { }
 
-       
+
         public void SetException(Exception exception)
         {
             CoEvents.ExceptionHandler?.Invoke(exception);
@@ -97,16 +93,16 @@ namespace CoEvent
         }
 
         [DebuggerHidden]
-        public void OnCompleted(Action continuation)=>UnsafeOnCompleted(continuation);
+        public void OnCompleted(Action continuation) => UnsafeOnCompleted(continuation);
         [DebuggerHidden]
-        public void UnsafeOnCompleted(Action continuation)=>this.continuation= continuation;
+        public void UnsafeOnCompleted(Action continuation) => this.continuation = continuation;
 
 
         [DebuggerHidden]
         public CoTask GetAwaiter() => this;
         [DebuggerHidden]
-        public async void Coroutine()=>await this;
-        
+        public async void Coroutine() => await this;
+
 
         public static CoTask CompletedTask
         {
@@ -149,7 +145,7 @@ namespace CoEvent
             task.Authorization = false;
             task.continuation = null;
             if (CoEvents.Pool != null) return;
-            CoEvents.Pool?.Recycle(typeof(CoTask<T>),task);
+            CoEvents.Pool?.Recycle(typeof(CoTask<T>), task);
         }
 
 
@@ -181,7 +177,7 @@ namespace CoEvent
         #endregion
 
 
-        public T GetResult() 
+        public T GetResult()
         {
             return Result;
         }
@@ -202,7 +198,7 @@ namespace CoEvent
             if (Authorization)
             {
                 if (IsCompleted) throw new InvalidOperationException("AsyncTask dont allow SetResult repeatly.");
-                this.Result= result;
+                this.Result = result;
                 //执行await以后的代码
                 continuation?.Invoke();
                 continuation = null;
@@ -213,7 +209,7 @@ namespace CoEvent
             Recycle(this);
         }
 
-        private Action unsafeSetResult= null;
+        private Action unsafeSetResult = null;
         public Action UnsafeSetResult
         {
             get
@@ -372,8 +368,8 @@ namespace CoEvent
             task.Token.Current = task;
             task.Token.Root = task;
             task.IsCompleted = false;
-            task.FrameCount= 1;
-            task.current = 0;        
+            task.FrameCount = 1;
+            task.current = 0;
             task.Authorization = true;
 
             CoEvents.Instance.Operator<IUpdate>().Subscribe(task.Update);
@@ -386,7 +382,7 @@ namespace CoEvent
             task.continuation = null;
             CoEvents.Instance.Operator<IUpdate>().UnSubscribe(task.Update);
             if (CoEvents.Pool != null) return;
-            CoEvents.Pool?.Recycle(typeof(CoTaskUpdate),task);
+            CoEvents.Pool?.Recycle(typeof(CoTaskUpdate), task);
         }
 
 

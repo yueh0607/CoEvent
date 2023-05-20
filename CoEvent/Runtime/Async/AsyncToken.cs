@@ -6,9 +6,9 @@
  */
 
 
-using CoEvent.Internal;
+using CoEvent.Async.Internal;
 using System;
-namespace CoEvent
+namespace CoEvent.Async
 {
 
     /// <summary>
@@ -24,16 +24,9 @@ namespace CoEvent
         //结束
         Completed
     }
-    public sealed class AsyncToken 
+    public sealed class AsyncToken
     {
-        //internal static T BindToken<T>(T task, AsyncTreeTokenNode token) where T : IAsyncTokenProperty
-        //{
-        //    task.Token?.Dispose();
-        //    task.Token = token;
-        //    token.Current = task;
-        //    token.Root = task;
-        //    return task;
-        //}
+
 
         internal AsyncTreeTokenNode node;
 

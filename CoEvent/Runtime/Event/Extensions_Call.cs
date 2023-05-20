@@ -96,8 +96,8 @@ namespace CoEvent
         public static T1 CallFirst<T1>(this ICoVarOperator<ICallEvent<T1>> container)
         {
             var mop = container.GetOperator();
-         
-            if(mop.GetNext(out var dele))
+
+            if (mop.GetNext(out var dele))
             {
                 mop.Reset();
                 return ((Func<T1>)dele).Invoke();
@@ -114,7 +114,7 @@ namespace CoEvent
             if (mop.GetNext(out var dele))
             {
                 mop.Reset();
-                return ((Func<T1,T2>)dele).Invoke(arg1);
+                return ((Func<T1, T2>)dele).Invoke(arg1);
             }
 
             return default;
@@ -127,7 +127,7 @@ namespace CoEvent
             if (mop.GetNext(out var dele))
             {
                 mop.Reset();
-                return ((Func<T1, T2,T3>)dele).Invoke(arg1,arg2);
+                return ((Func<T1, T2, T3>)dele).Invoke(arg1, arg2);
             }
 
             return default;
@@ -142,7 +142,7 @@ namespace CoEvent
             if (mop.GetNext(out var dele))
             {
                 mop.Reset();
-                return ((Func<T1, T2, T3,T4>)dele).Invoke(arg1, arg2,arg3);
+                return ((Func<T1, T2, T3, T4>)dele).Invoke(arg1, arg2, arg3);
             }
 
             return default;
@@ -156,7 +156,7 @@ namespace CoEvent
             if (mop.GetNext(out var dele))
             {
                 mop.Reset();
-                return ((Func<T1, T2, T3, T4,T5>)dele).Invoke(arg1, arg2, arg3,arg4);
+                return ((Func<T1, T2, T3, T4, T5>)dele).Invoke(arg1, arg2, arg3, arg4);
             }
 
             return default;
@@ -170,7 +170,7 @@ namespace CoEvent
             if (mop.GetNext(out var dele))
             {
                 mop.Reset();
-                return ((Func<T1, T2, T3, T4, T5,T6>)dele).Invoke(arg1, arg2, arg3, arg4,arg5);
+                return ((Func<T1, T2, T3, T4, T5, T6>)dele).Invoke(arg1, arg2, arg3, arg4, arg5);
             }
             return default;
         }

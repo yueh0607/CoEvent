@@ -1,5 +1,4 @@
-﻿using CoEvent.Internal;
-using System;
+﻿using System;
 namespace CoEvent
 {
     public static partial class MessageExtensions

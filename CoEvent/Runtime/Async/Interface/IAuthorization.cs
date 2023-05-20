@@ -5,7 +5,7 @@
  * 实现该接口以获取有效授权
  */
 
-namespace CoEvent
+namespace CoEvent.Async
 {
 
     public interface IAuthorization

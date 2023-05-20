@@ -7,7 +7,7 @@
 
 
 using System;
-namespace CoEvent
+namespace CoEvent.Async
 {
 
 

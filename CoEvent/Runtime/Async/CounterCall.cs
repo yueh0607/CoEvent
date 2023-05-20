@@ -1,8 +1,6 @@
-﻿using CoEvent;
-using GluonGui.Dialog;
-using System;
+﻿using System;
 using System.Collections.Generic;
-namespace CoEvent
+namespace CoEvent.Async
 {
     public sealed class CounterCall
     {
@@ -23,7 +21,7 @@ namespace CoEvent
             call.ClickValue = 0;
             call.OnceRecycle = false;
             if (CoEvents.Pool != null) return;
-            CoEvents.Pool.Recycle(typeof(CounterCall),call);
+            CoEvents.Pool.Recycle(typeof(CounterCall), call);
         }
 
 
@@ -100,7 +98,7 @@ namespace CoEvent
             call.OnceRecycle = false;
             call.Results.Clear();
             if (CoEvents.Pool != null) return;
-            CoEvents.Pool.Recycle(typeof(CounterCall<T>),call);
+            CoEvents.Pool.Recycle(typeof(CounterCall<T>), call);
         }
 
 

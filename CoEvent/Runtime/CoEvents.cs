@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using UnityEditor;
 using UnityEngine;
 
 namespace CoEvent
@@ -24,11 +25,16 @@ namespace CoEvent
             removeMarks.Clear();
         }
 
+        internal static bool Initialized { get; private set; } = false;
+
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
         public static void InitPublisher()
         {
+            if(Initialized) return;
             GameObject publisher = new GameObject("CoEventPublisher");
             GameObject.DontDestroyOnLoad(publisher);
             publisher.AddComponent<CoEventPublisher>();
+            Initialized= true;
         }
 
         public readonly static object Instance = new object();

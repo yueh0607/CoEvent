@@ -7,7 +7,7 @@
  */
 
 using System.Runtime.CompilerServices;
-namespace CoEvent
+namespace CoEvent.Async
 {
     /// <summary>
     /// 实现可以被GetAwaiter返回支持的Awaiter对象

@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using CoEvent.Async.Internal;
+using System;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Security;
-using UnityEngine;
 
-namespace CoEvent
+namespace CoEvent.Async
 {
     public struct CoTaskBuilder
     {
