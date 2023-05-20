@@ -10,6 +10,7 @@ namespace CoEvent
     {
         internal static Dictionary<Type, CoOperator<ICoEventBase>> container = new Dictionary<Type, CoOperator<ICoEventBase>>();
         internal static HashSet<Type> removeMarks = new HashSet<Type>();
+
         public static void ReleaseEmpty()
         {
             foreach (var con in container)
@@ -20,6 +21,7 @@ namespace CoEvent
             {
                 container.Remove(tp);
             }
+            removeMarks.Clear();
         }
 
         public static void InitPublisher()
@@ -29,6 +31,10 @@ namespace CoEvent
             publisher.AddComponent<CoEventPublisher>();
         }
 
+        public readonly static object Instance = new object();
+        public static IPool Pool { get; set; } = null;
+
+        public static Action<Exception> ExceptionHandler = (x) => throw x;
     }
 
     public static class CoEventManagerEx1
