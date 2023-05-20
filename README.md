@@ -6,6 +6,8 @@ CoEvent是一个能约束参数类型的，能约束调用类型的，参数和�
 
 理论上版本更低的Unity3D也能实现(可能在后续版本提供支持)，不过没有提供原生的UnsafeUtility.As，可以自己实现一个替换上去。
 
+CoEvent最近新增的单线程异步(Task-Like)，旨在完全消灭回调的使用，让您能像写同步方法一样去书写异步方法，而不需要设置无数个bool标记，也不需要设置无数个回调，极大的优化了回调书写体验，在异步方法能畅通无阻的访问Unity主线程能访问的一切资源。
+
 ## 一、优势
 
 CoEvent 的优势主要在于“约束”  ，现在传统的消息系统一般有如下方式实现
@@ -96,4 +98,33 @@ public class Test : MonoBehaviour
 
 }
 ```
+
+## 四、单线程异步
+
+CoEvent提供了一种极佳的方式来处理回调等异步逻辑
+
+```csharp
+using CoEvent.Async;
+
+    //可等待的任务
+   public async CoTask mTest()
+    {
+    //等待600帧
+        await Async.WaitForFrame(600);
+        Debug.Log("Hha");
+        //等待3秒
+        await Async.Delay(3);
+        Debug.Log("111");
+    }
+
+```
+使用方式非常的简单，都放在了Async类里，当然也支持取消，挂起等，只需要对CoTask调用拓展方法WithToken
+```csharp
+mTest().WithToken(out var token);
+token.Yield();
+```
+
+如果您需要进一步的拓展CoTask，只需要写一个方法,CoTask.Create拿到新的CoTask，然后在任务结束时调用它的SetResult即可，可以参考Async类的实现。
+可以简单的与YooAsset等进行对接
+
 
