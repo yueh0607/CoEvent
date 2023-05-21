@@ -1,10 +1,10 @@
-﻿using CoEvent.Internal;
+﻿using CoEvents.Internal;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 
-namespace CoEvent
+namespace CoEvents
 {
     public class CoOperator<T> : ICoVarOperator<T>
     {

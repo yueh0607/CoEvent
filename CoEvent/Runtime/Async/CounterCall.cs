@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-namespace CoEvent.Async
+namespace CoEvents.Async
 {
     public sealed class CounterCall
     {
@@ -9,7 +9,7 @@ namespace CoEvent.Async
         public static CounterCall Create()
         {
             CounterCall call = null;
-            if (CoEvents.Pool != null) call = (CounterCall)CoEvents.Pool.Allocate(typeof(CounterCall));
+            if (CoEvent.Pool != null) call = (CounterCall)CoEvent.Pool.Allocate(typeof(CounterCall));
             else call = new CounterCall();
 
             return call;
@@ -20,8 +20,8 @@ namespace CoEvent.Async
             call._counter = 0;
             call.ClickValue = 0;
             call.OnceRecycle = false;
-            if (CoEvents.Pool != null) return;
-            CoEvents.Pool.Recycle(typeof(CounterCall), call);
+            if (CoEvent.Pool != null) return;
+            CoEvent.Pool.Recycle(typeof(CounterCall), call);
         }
 
 
@@ -85,7 +85,7 @@ namespace CoEvent.Async
         public static CounterCall<T> Create()
         {
             CounterCall<T> call = null;
-            if (CoEvents.Pool != null) call = (CounterCall<T>)CoEvents.Pool.Allocate(typeof(CounterCall<T>));
+            if (CoEvent.Pool != null) call = (CounterCall<T>)CoEvent.Pool.Allocate(typeof(CounterCall<T>));
             else call = new CounterCall<T>();
 
             return call;
@@ -97,8 +97,8 @@ namespace CoEvent.Async
             call.ClickValue = 0;
             call.OnceRecycle = false;
             call.Results.Clear();
-            if (CoEvents.Pool != null) return;
-            CoEvents.Pool.Recycle(typeof(CounterCall<T>), call);
+            if (CoEvent.Pool != null) return;
+            CoEvent.Pool.Recycle(typeof(CounterCall<T>), call);
         }
 
 

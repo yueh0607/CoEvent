@@ -7,7 +7,7 @@
 
 
 using System.Collections.Generic;
-namespace CoEvent.Async
+namespace CoEvents.Async
 {
     public static partial class Async
     {

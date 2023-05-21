@@ -1,6 +1,6 @@
 ﻿
 using System;
-namespace CoEvent
+namespace CoEvents
 {
     public static partial class MessageExtensions
     {  /// <summary>

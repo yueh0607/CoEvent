@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace CoEvent
+namespace CoEvents
 {
     public class CoEventPublisher : MonoBehaviour
     {

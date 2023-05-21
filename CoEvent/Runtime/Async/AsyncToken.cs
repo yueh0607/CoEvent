@@ -6,9 +6,9 @@
  */
 
 
-using CoEvent.Async.Internal;
+using CoEvents.Async.Internal;
 using System;
-namespace CoEvent.Async
+namespace CoEvents.Async
 {
 
     /// <summary>

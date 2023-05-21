@@ -1,7 +1,7 @@
-﻿using CoEvent.Internal;
+﻿using CoEvents.Internal;
 
 //建议不要随便使用这个命名空间下的东西
-namespace CoEvent.Internal
+namespace CoEvents.Internal
 {
 
     //基础接口是没法处理事件的，没有任何匹配的功能，简称没用
@@ -26,7 +26,7 @@ namespace CoEvent.Internal
 }
 
 
-namespace CoEvent
+namespace CoEvents
 {
 #pragma warning disable
 

@@ -1,10 +1,10 @@
-﻿using CoEvent.Async.Internal;
+﻿using CoEvents.Async.Internal;
 using System;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Security;
 
-namespace CoEvent.Async
+namespace CoEvents.Async
 {
     public struct CoTaskBuilder
     {

@@ -1,6 +1,6 @@
 {
     "name": "CoEvent.Runtime",
-    "rootNamespace": "CoEvent",
+    "rootNamespace": "CoEvents",
     "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],

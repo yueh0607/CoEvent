@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace CoEvent
+namespace CoEvents
 {
 
     public static partial class MessageExtensions

@@ -1,7 +1,7 @@
 ﻿
 using System.Diagnostics;
 using Unity.Collections.LowLevel.Unsafe;
-namespace CoEvent
+namespace CoEvents
 {
     //在这里决定强转的方法实现
 

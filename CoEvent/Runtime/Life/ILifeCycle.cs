@@ -1,4 +1,4 @@
-﻿namespace CoEvent
+﻿namespace CoEvents
 {
     public interface IUpdate : ISendEvent<float> { };
 

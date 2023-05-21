@@ -1,9 +1,9 @@
-﻿using CoEvent.Async.Internal;
+﻿using CoEvents.Async.Internal;
 using System;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 
-namespace CoEvent.Async
+namespace CoEvents.Async
 {
     [AsyncMethodBuilder(typeof(CoTaskBuilder))]
     public class CoTask : IAsyncTask, IAsyncTokenProperty
@@ -16,7 +16,7 @@ namespace CoEvent.Async
         public static CoTask Create()
         {
             CoTask task = null;
-            if (CoEvents.Pool != null) task = (CoTask)CoEvents.Pool.Allocate(typeof(CoTask));
+            if (CoEvent.Pool != null) task = (CoTask)CoEvent.Pool.Allocate(typeof(CoTask));
             else task = new CoTask();
 
             task.Token = new AsyncTreeTokenNode(task, task);
@@ -31,8 +31,8 @@ namespace CoEvent.Async
         {
             task.Authorization = false;
 
-            if (CoEvents.Pool != null) return;
-            CoEvents.Pool?.Recycle(typeof(CoTask), task);
+            if (CoEvent.Pool != null) return;
+            CoEvent.Pool?.Recycle(typeof(CoTask), task);
         }
 
 
@@ -69,7 +69,7 @@ namespace CoEvent.Async
 
         public void SetException(Exception exception)
         {
-            CoEvents.ExceptionHandler?.Invoke(exception);
+            CoEvent.ExceptionHandler?.Invoke(exception);
             SetResultMethod();
         }
         public void SetCancel()
@@ -128,7 +128,7 @@ namespace CoEvent.Async
         public static CoTask<T> Create()
         {
             CoTask<T> task = null;
-            if (CoEvents.Pool != null) task = (CoTask<T>)CoEvents.Pool.Allocate(typeof(CoTask<T>));
+            if (CoEvent.Pool != null) task = (CoTask<T>)CoEvent.Pool.Allocate(typeof(CoTask<T>));
             else task = new CoTask<T>();
 
 
@@ -144,8 +144,8 @@ namespace CoEvent.Async
         {
             task.Authorization = false;
             task.continuation = null;
-            if (CoEvents.Pool != null) return;
-            CoEvents.Pool?.Recycle(typeof(CoTask<T>), task);
+            if (CoEvent.Pool != null) return;
+            CoEvent.Pool?.Recycle(typeof(CoTask<T>), task);
         }
 
 
@@ -185,7 +185,7 @@ namespace CoEvent.Async
 
         public void SetException(Exception exception)
         {
-            CoEvents.ExceptionHandler?.Invoke(exception);
+            CoEvent.ExceptionHandler?.Invoke(exception);
             SetResultMethod(default);
         }
         public void SetCancel()
@@ -248,7 +248,7 @@ namespace CoEvent.Async
         public static CoTaskTimer Create()
         {
             CoTaskTimer task = null;
-            if (CoEvents.Pool != null) task = (CoTaskTimer)CoEvents.Pool.Allocate(typeof(CoTaskTimer));
+            if (CoEvent.Pool != null) task = (CoTaskTimer)CoEvent.Pool.Allocate(typeof(CoTaskTimer));
             else task = new CoTaskTimer();
 
             task.Token = new AsyncTreeTokenNode(task, task);
@@ -259,7 +259,7 @@ namespace CoEvent.Async
             task.EndTime = 1000f;
             task.Authorization = true;
 
-            CoEvents.Instance.Operator<IUpdate>().Subscribe(task.Update);
+            CoEvent.Instance.Operator<IUpdate>().Subscribe(task.Update);
 
             return task;
         }
@@ -267,9 +267,9 @@ namespace CoEvent.Async
         {
             task.Authorization = false;
             task.continuation = null;
-            CoEvents.Instance.Operator<IUpdate>().UnSubscribe(task.Update);
-            if (CoEvents.Pool != null) return;
-            CoEvents.Pool?.Recycle(typeof(CoTask), task);
+            CoEvent.Instance.Operator<IUpdate>().UnSubscribe(task.Update);
+            if (CoEvent.Pool != null) return;
+            CoEvent.Pool?.Recycle(typeof(CoTask), task);
         }
 
 
@@ -319,7 +319,7 @@ namespace CoEvent.Async
 
         public void SetException(Exception exception)
         {
-            CoEvents.ExceptionHandler?.Invoke(exception);
+            CoEvent.ExceptionHandler?.Invoke(exception);
             SetResultMethod();
         }
         public void SetCancel()
@@ -361,7 +361,7 @@ namespace CoEvent.Async
         public static CoTaskUpdate Create()
         {
             CoTaskUpdate task = null;
-            if (CoEvents.Pool != null) task = (CoTaskUpdate)CoEvents.Pool.Allocate(typeof(CoTaskUpdate));
+            if (CoEvent.Pool != null) task = (CoTaskUpdate)CoEvent.Pool.Allocate(typeof(CoTaskUpdate));
             else task = new CoTaskUpdate();
 
             task.Token = new AsyncTreeTokenNode(task, task);
@@ -372,7 +372,7 @@ namespace CoEvent.Async
             task.current = 0;
             task.Authorization = true;
 
-            CoEvents.Instance.Operator<IUpdate>().Subscribe(task.Update);
+            CoEvent.Instance.Operator<IUpdate>().Subscribe(task.Update);
 
             return task;
         }
@@ -380,9 +380,9 @@ namespace CoEvent.Async
         {
             task.Authorization = false;
             task.continuation = null;
-            CoEvents.Instance.Operator<IUpdate>().UnSubscribe(task.Update);
-            if (CoEvents.Pool != null) return;
-            CoEvents.Pool?.Recycle(typeof(CoTaskUpdate), task);
+            CoEvent.Instance.Operator<IUpdate>().UnSubscribe(task.Update);
+            if (CoEvent.Pool != null) return;
+            CoEvent.Pool?.Recycle(typeof(CoTaskUpdate), task);
         }
 
 
@@ -430,7 +430,7 @@ namespace CoEvent.Async
 
         public void SetException(Exception exception)
         {
-            CoEvents.ExceptionHandler?.Invoke(exception);
+            CoEvent.ExceptionHandler?.Invoke(exception);
             SetResultMethod();
         }
         public void SetCancel()

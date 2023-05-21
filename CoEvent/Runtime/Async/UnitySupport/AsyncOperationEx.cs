@@ -1,10 +1,10 @@
-﻿using CoEvent.Async;
+﻿using CoEvents.Async;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace CoEvent.Async
+namespace CoEvents.Async
 {
 #if UNITY_2017_1_OR_NEWER
     public static class AsyncOperationEx
@@ -16,7 +16,7 @@ namespace CoEvent.Async
             return task;
 
         }
-        public static AsyncOperation WithProgress(this AsyncOperation operation,Action<float> progress)
+        public static AsyncOperation WithProgress(this AsyncOperation operation, Action<float> progress)
         {
             Action<float> callback = (x) =>
             {
@@ -24,11 +24,14 @@ namespace CoEvent.Async
             };
             operation.completed += (x) =>
             {
-                CoEvents.Instance.Operator<IUpdate>().UnSubscribe(callback);
+                CoEvent.Instance.Operator<IUpdate>().UnSubscribe(callback);
             };
-            CoEvents.Instance.Operator<IUpdate>().Subscribe(callback);
+            CoEvent.Instance.Operator<IUpdate>().Subscribe(callback);
             return operation;
         }
+
+
+       
     }
 #endif
 }
