@@ -128,3 +128,7 @@ token.Yield();
 可以简单的与YooAsset等进行对接
 
 
+
+## 欢迎加入
+
+![GameDev游研社群聊二维码](https://raw.githubusercontent.com/yueh0607/MyPicueres/main/202305201805505.png)
