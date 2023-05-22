@@ -97,7 +97,3 @@ token.Yield();
 可以简单的与YooAsset等进行对接
 
 
-
-## 欢迎加入
-
-![一个交流群](https://raw.githubusercontent.com/yueh0607/MyPicueres/main/202305201805505.png)
