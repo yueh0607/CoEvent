@@ -8,7 +8,7 @@ namespace CoEvents
 {
     public class CoOperator<T> : ICoVarOperator<T>
     {
-        public List<Delegate> Events { get; private set; } = new();
+        public List<Delegate> Events { get; private set; } = new List<Delegate>();
 
         /// <summary>
         /// 委托数
