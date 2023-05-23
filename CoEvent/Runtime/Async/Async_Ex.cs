@@ -27,7 +27,7 @@ namespace CoEvents.Async
         {
             if (count <= 0)
             {
-                await Async.Complete();
+                await CompletedTask;
             }
             else
             {
@@ -37,16 +37,7 @@ namespace CoEvents.Async
             }
         }
 
-        /// <summary>
-        /// 用于在特定时刻配位await并实现异步转同步
-        /// </summary>
-        /// <param name="action"></param>
-        /// <returns></returns>
-        public static CoTask Complete()
-        {
-            return CoTask.CompletedTask;
-        }
-
+        public static CoTaskCompleted CompletedTask => new CoTaskCompleted();
 
 
         /// <summary>

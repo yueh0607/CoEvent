@@ -32,7 +32,7 @@ namespace CoEvents.Async.Internal
             }
             else
             {
-                this.Current.Token.Yield();
+                this.Current.Token?.Yield();
             }
         }
         public void Continue()
@@ -44,7 +44,7 @@ namespace CoEvents.Async.Internal
             }
             else
             {
-                this.Current.Token.Yield();
+                this.Current.Token?.Yield();
             }
 
         }
@@ -59,8 +59,8 @@ namespace CoEvents.Async.Internal
             }
             else
             {
-                this.Current.Token.Yield();
-                this.Current.Token.Cancel();
+                this.Current.Token?.Yield();
+                this.Current.Token?.Cancel();
             }
 
 

@@ -103,17 +103,6 @@ namespace CoEvents.Async
         [DebuggerHidden]
         public async void Coroutine() => await this;
 
-
-        public static CoTask CompletedTask
-        {
-            get
-            {
-                var task = CoTask.Create();
-                task.SetResultMethod();
-                return task;
-            }
-        }
-
     }
 
 
@@ -464,6 +453,25 @@ namespace CoEvents.Async
         [DebuggerHidden]
         public async void Coroutine() => await this;
 
+    }
+
+
+    public struct CoTaskCompleted:INotifyCompletion
+    {
+
+        public bool IsCompleted => true;
+
+        public void GetResult() { }
+
+        public void SetException(Exception exception)
+        {
+            CoEvent.ExceptionHandler?.Invoke(exception);
+        }
+
+        [DebuggerHidden]
+        public CoTaskCompleted GetAwaiter() => this;
+
+        public void OnCompleted(Action continuation) { }
     }
 
 }
