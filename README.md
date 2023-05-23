@@ -1,7 +1,7 @@
 # CoEvent
 
 CoEvent是一个参数和调用类型安全的轻量级事件系统。
-目前了解的支持平台有.NET CORE和Unity3D 2020.1 OR NEWER。
+目前了解的支持平台有.NET CORE和Unity3D 2021.1 OR NEWER。
 理论上版本更低的Unity3D也能实现(可能在后续版本提供支持)，不过没有提供原生的UnsafeUtility.As，可以自己实现一个替换上去。
 ## 更新计划
 - 适配async到Addressable，YooAsset。
