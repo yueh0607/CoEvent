@@ -14,7 +14,7 @@ namespace CoEvents.Async
     /// <summary>
     /// 异步任务接口
     /// </summary>
-    public interface IAsyncTask : ICriticalAwaiter
+    public interface IAsyncTask : ICriticalAwaiter,ICoTask
     {
         /// <summary>
         /// 结束当前任务
@@ -33,7 +33,7 @@ namespace CoEvents.Async
     /// 异步任务接口
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public interface IAsyncTask<T> : ICriticalAwaiter<T>
+    public interface IAsyncTask<T> : ICriticalAwaiter<T>, ICoTask
     {
         /// <summary>
         /// 结束当前任务

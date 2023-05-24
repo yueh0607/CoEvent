@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 namespace CoEvents.Async
 {
     [AsyncMethodBuilder(typeof(CoTaskBuilder))]
-    public class CoTask : IAsyncTask, IAsyncTokenProperty
+    public class CoTask : IAsyncTask, IAsyncTokenProperty,ICoTask
     {
         //在结束时调用，无论是否成功
         public event Action OnTaskCompleted = null;
@@ -100,14 +100,12 @@ namespace CoEvents.Async
 
         [DebuggerHidden]
         public CoTask GetAwaiter() => this;
-        [DebuggerHidden]
-        public async void Coroutine() => await this;
 
     }
 
 
     [AsyncMethodBuilder(typeof(CoTaskBuilder<>))]
-    public class CoTask<T> : IAsyncTask<T>, IAsyncTokenProperty
+    public class CoTask<T> : IAsyncTask<T>, IAsyncTokenProperty, ICoTask
     {
         //在结束时调用，无论是否成功
         public event Action<T> OnTaskCompleted = null;
@@ -222,13 +220,11 @@ namespace CoEvents.Async
 
         [DebuggerHidden]
         public CoTask<T> GetAwaiter() => this;
-        [DebuggerHidden]
-        public async void Coroutine() => await this;
 
     }
 
 
-    public class CoTaskTimer : IAsyncTask, IAsyncTokenProperty
+    public class CoTaskTimer : IAsyncTask, IAsyncTokenProperty, ICoTask
     {
 
         private Action continuation = null;
@@ -335,12 +331,9 @@ namespace CoEvents.Async
 
         [DebuggerHidden]
         public CoTaskTimer GetAwaiter() => this;
-        [DebuggerHidden]
-        public async void Coroutine() => await this;
-
     }
 
-    public class CoTaskUpdate : IAsyncTask, IAsyncTokenProperty
+    public class CoTaskUpdate : IAsyncTask, IAsyncTokenProperty, ICoTask
     {
         //在结束时调用，无论是否成功
         public event Action OnTaskCompleted = null;
@@ -450,13 +443,11 @@ namespace CoEvents.Async
 
         [DebuggerHidden]
         public CoTaskUpdate GetAwaiter() => this;
-        [DebuggerHidden]
-        public async void Coroutine() => await this;
 
     }
 
 
-    public struct CoTaskCompleted:INotifyCompletion
+    public struct CoTaskCompleted : INotifyCompletion, ICoTask
     {
 
         public bool IsCompleted => true;
@@ -473,5 +464,4 @@ namespace CoEvents.Async
 
         public void OnCompleted(Action continuation) { }
     }
-
 }
