@@ -1,18 +1,17 @@
 ﻿//#define CoEvent_Addressable_Enable
 
-
+#if CoEvent_Addressable_Enable
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
 
-#if CoEvent_Addressable_Enable
+
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
-#endif
+
 namespace CoEvents.Async
 {
-#if CoEvent_Addressable_Enable
     public static class AddressableEx 
     {
         public static CoTask<AsyncOperationHandle> GetAwaiter(this AsyncOperationHandle handle)
@@ -28,5 +27,6 @@ namespace CoEvents.Async
             return task;
         }
     }
-#endif
+
 }
+#endif

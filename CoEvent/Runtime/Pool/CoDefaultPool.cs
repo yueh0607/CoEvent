@@ -40,7 +40,7 @@ namespace CoEvents
                 queue.Enqueue(item);
             }
         }
-
+            
 
         public T Allocate<T>()
         {
@@ -50,5 +50,52 @@ namespace CoEvents
         {
             Recycle(typeof(T), item);
         }
+
+
+        public int GameObjectMaxCount { get; set; } = 1000;
+
+
+        private Dictionary<int, Queue<GameObject>> gos = new Dictionary<int, Queue<GameObject>>();
+
+        private Dictionary<int, Func<GameObject>> createFuncs = new Dictionary<int, Func<GameObject>>();
+        private Dictionary<int, Action<GameObject>> destroyActions = new Dictionary<int, Action<GameObject>>();
+
+        public void SetGameObjectBehaviour(int key,Func<GameObject> onCreate,Action<GameObject> onDestroy=null)
+        {
+            if(createFuncs.ContainsKey(key))
+            {
+                createFuncs[key] = onCreate;
+                destroyActions[key] = onDestroy;
+            }
+            else
+            {
+                createFuncs.Add(key, onCreate);
+                destroyActions.Add(key, onDestroy);
+            }
+        }
+        
+        public GameObject AllocateGameObject(int key)
+        {
+            if (!createFuncs.ContainsKey(key)) throw new InvalidOperationException("Please set CreateFunc before call Allocate");
+            if(!gos.ContainsKey(key))
+            {
+                gos.Add(key, new Queue<GameObject>());
+            }
+            if (gos[key].Count < 0) gos[key].Enqueue(createFuncs[key]());
+
+            return gos[key].Dequeue();
+        }
+
+        public void RecycleGameObject(int key,GameObject go)
+        {
+            if (!createFuncs.ContainsKey(key)) throw new InvalidOperationException("Please set DestroyAction before call Recycle");
+            if (!gos.ContainsKey(key))
+            {
+                gos.Add(key, new Queue<GameObject>());
+            }
+            if (gos[key].Count >= GameObjectMaxCount) destroyActions[key]?.Invoke(go);
+            else gos[key].Enqueue(go);
+        }
+
     }
 }
