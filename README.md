@@ -184,5 +184,6 @@ CoEvent引入了一个性能较高，且较为简单的对象池，且允许用�
 T item = CoEvent.Pool?.Allocate<T>();
 CoEvent.Pool?Recycle(item);
 ```
+同样的，也有针对于GameObject的API，都采用轻量化实现。
 
 
