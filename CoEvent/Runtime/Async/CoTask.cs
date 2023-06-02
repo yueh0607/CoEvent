@@ -244,7 +244,7 @@ namespace CoEvents.Async
             task.EndTime = 1000f;
             task.Authorization = true;
 
-            CoEvent.Instance.Operator<IUpdate>().Subscribe(task.Update);
+ 
 
             return task;
         }
@@ -252,7 +252,7 @@ namespace CoEvents.Async
         {
             task.Authorization = false;
             task.continuation = null;
-            CoEvent.Instance.Operator<IUpdate>().UnSubscribe(task.Update);
+            //CoEvent.Instance.Operator<IUpdate>().UnSubscribe(task.Update);
             if (CoEvent.Pool != null) return;
             CoEvent.Pool?.Recycle(typeof(CoTask), task);
         }
@@ -319,6 +319,7 @@ namespace CoEvents.Async
                 //执行await以后的代码
                 continuation?.Invoke();
             }
+            CoEvent.Instance.Operator<IUpdate>().UnSubscribe(Update);
             //回收到Pool
             Recycle(this);
         }
@@ -330,7 +331,11 @@ namespace CoEvents.Async
 
 
         [DebuggerHidden]
-        public CoTaskTimer GetAwaiter() => this;
+        public CoTaskTimer GetAwaiter()
+        {
+            CoEvent.Instance.Operator<IUpdate>().Subscribe(Update);
+            return this;
+        }
     }
 
     public class CoTaskUpdate : IAsyncTask, IAsyncTokenProperty, ICoTask
