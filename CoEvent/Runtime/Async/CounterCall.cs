@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Runtime.CompilerServices;
+
 namespace CoEvents.Async
 {
     public sealed class CounterCall
@@ -146,6 +149,7 @@ namespace CoEvents.Async
         /// </summary>
         public Action<T> PlusOne
         {
+            [DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
                 if (plusOne == null)

@@ -8,6 +8,9 @@
 
 using CoEvents.Async.Internal;
 using System;
+using System.Diagnostics;
+using System.Runtime.CompilerServices;
+
 namespace CoEvents.Async
 {
 
@@ -32,19 +35,21 @@ namespace CoEvents.Async
 
         public AsyncStatus Status { get; private set; } = AsyncStatus.Pending;
 
-        //private AsyncToken() { }
+        [DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Yield()
         {
             if (Status == AsyncStatus.Completed) throw new InvalidOperationException("尝试挂起已经结束的任务是无效的");
             Status = AsyncStatus.Yield;
             node.Yield();
         }
+        [DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Continue()
         {
             if (Status == AsyncStatus.Completed) throw new InvalidOperationException("尝试取消已经结束的任务是无效的");
             Status = AsyncStatus.Pending;
             node.Continue();
         }
+        [DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Cancel()
         {
             if (Status == AsyncStatus.Completed) throw new InvalidOperationException();
