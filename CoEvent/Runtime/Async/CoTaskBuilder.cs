@@ -50,6 +50,7 @@ namespace CoEvents.Async
         {
             task.Token.Current = awaiter as IAsyncTokenProperty;
             awaiter.OnCompleted(stateMachine.MoveNext);
+            //UnityEngine.Debug.Log("100");
         }
 
         // 7. AwaitUnsafeOnCompleted 
@@ -60,6 +61,7 @@ namespace CoEvents.Async
 
             task.Token.Current = awaiter as IAsyncTokenProperty;
             awaiter.OnCompleted(stateMachine.MoveNext);
+            //UnityEngine.Debug.Log("100");
         }
 
         // 9. SetStateMachine 

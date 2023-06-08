@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 namespace CoEvents.Async
 {
     [AsyncMethodBuilder(typeof(CoTaskBuilder))]
-    public class CoTask : IAsyncTask, IAsyncTokenProperty,ICoTask
+    public class CoTask : IAsyncTask, IAsyncTokenProperty, ICoTask
     {
         //在结束时调用，无论是否成功
         public event Action OnTaskCompleted = null;
@@ -23,13 +23,13 @@ namespace CoEvents.Async
             task.Token.Current = task;
             task.Token.Root = task;
             task.IsCompleted = false;
-            task.Authorization = true;
+            task.Token.Authorization = true;
 
             return task;
         }
         public static void Recycle(CoTask task)
         {
-            task.Authorization = false;
+            task.Token.Authorization = false;
 
             if (CoEvent.Pool != null) return;
             CoEvent.Pool?.Recycle(typeof(CoTask), task);
@@ -56,11 +56,7 @@ namespace CoEvents.Async
         public AsyncTreeTokenNode Token { get; internal set; }
 
 
-        /// <summary>
-        /// 授权状态，代表当前任务是否被挂起，也决定了状态机是否能够继续前进
-        /// </summary>
-        public bool Authorization { get; internal set; } = true;
-        bool IAuthorization.Authorization { get => Authorization; set => Authorization = value; }
+
         #endregion
 
 
@@ -79,7 +75,7 @@ namespace CoEvents.Async
 
         private void SetResultMethod()
         {
-            if (Authorization)
+            if (Token.Authorization)
             {
                 if (IsCompleted) throw new InvalidOperationException("AsyncTask dont allow SetResult repeatly.");
                 //执行await以后的代码
@@ -123,13 +119,13 @@ namespace CoEvents.Async
             task.Token.Current = task;
             task.Token.Root = task;
             task.IsCompleted = false;
-            task.Authorization = true;
+            task.Token.Authorization = true;
 
             return task;
         }
         public static void Recycle(CoTask<T> task)
         {
-            task.Authorization = false;
+            task.Token.Authorization = false;
             task.continuation = null;
             if (CoEvent.Pool != null) return;
             CoEvent.Pool?.Recycle(typeof(CoTask<T>), task);
@@ -156,11 +152,6 @@ namespace CoEvents.Async
         public AsyncTreeTokenNode Token { get; internal set; }
 
 
-        /// <summary>
-        /// 授权状态，代表当前任务是否被挂起，也决定了状态机是否能够继续前进
-        /// </summary>
-        public bool Authorization { get; internal set; } = true;
-        bool IAuthorization.Authorization { get => Authorization; set => Authorization = value; }
         #endregion
 
 
@@ -182,7 +173,7 @@ namespace CoEvents.Async
 
         private void SetResultMethod(T result)
         {
-            if (Authorization)
+            if (Token.Authorization)
             {
                 if (IsCompleted) throw new InvalidOperationException("AsyncTask dont allow SetResult repeatly.");
                 this.Result = result;
@@ -242,15 +233,15 @@ namespace CoEvents.Async
             task.IsCompleted = false;
             task.currentTime = 0;
             task.EndTime = 1000f;
-            task.Authorization = true;
+            task.Token.Authorization = true;
 
- 
+
 
             return task;
         }
         public static void Recycle(CoTaskTimer task)
         {
-            task.Authorization = false;
+            task.Token.Authorization = false;
             task.continuation = null;
             //CoEvent.Instance.Operator<IUpdate>().UnSubscribe(task.Update);
             if (CoEvent.Pool != null) return;
@@ -278,11 +269,7 @@ namespace CoEvents.Async
         public AsyncTreeTokenNode Token { get; internal set; }
 
 
-        /// <summary>
-        /// 授权状态，代表当前任务是否被挂起，也决定了状态机是否能够继续前进
-        /// </summary>
-        public bool Authorization { get; internal set; } = true;
-        bool IAuthorization.Authorization { get => Authorization; set => Authorization = value; }
+
         #endregion
 
 
@@ -290,7 +277,8 @@ namespace CoEvents.Async
         private float currentTime = 0f;
         void Update(float deltaTime)
         {
-            if (Authorization)
+            //UnityEngine.Debug.Log(Token.Authorization);
+            if (Token.Authorization)
             {
                 currentTime += deltaTime;
                 if (currentTime >= EndTime)
@@ -314,7 +302,7 @@ namespace CoEvents.Async
 
         private void SetResultMethod()
         {
-            if (Authorization)
+            if (Token.Authorization)
             {
                 //执行await以后的代码
                 continuation?.Invoke();
@@ -357,7 +345,7 @@ namespace CoEvents.Async
             task.IsCompleted = false;
             task.FrameCount = 1;
             task.current = 0;
-            task.Authorization = true;
+            task.Token.Authorization = true;
 
             CoEvent.Instance.Operator<IUpdate>().Subscribe(task.Update);
 
@@ -365,7 +353,7 @@ namespace CoEvents.Async
         }
         public static void Recycle(CoTaskUpdate task)
         {
-            task.Authorization = false;
+            task.Token.Authorization = false;
             task.continuation = null;
             CoEvent.Instance.Operator<IUpdate>().UnSubscribe(task.Update);
             if (CoEvent.Pool != null) return;
@@ -393,11 +381,7 @@ namespace CoEvents.Async
         public AsyncTreeTokenNode Token { get; internal set; }
 
 
-        /// <summary>
-        /// 授权状态，代表当前任务是否被挂起，也决定了状态机是否能够继续前进
-        /// </summary>
-        public bool Authorization { get; internal set; } = true;
-        bool IAuthorization.Authorization { get => Authorization; set => Authorization = value; }
+
         #endregion
 
 
@@ -406,10 +390,11 @@ namespace CoEvents.Async
 
         void Update(float deltaTime)
         {
-            if (current++ >= FrameCount)
-            {
-                SetResult();
-            }
+            if (Token.Authorization)
+                if (current++ >= FrameCount)
+                {
+                    SetResult();
+                }
 
         }
         public void GetResult() { }
@@ -427,7 +412,7 @@ namespace CoEvents.Async
 
         private void SetResultMethod()
         {
-            if (Authorization)
+            if (Token.Authorization)
             {
                 if (IsCompleted) throw new InvalidOperationException("AsyncTask dont allow SetResult repeatly.");
                 //执行await以后的代码

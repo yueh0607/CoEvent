@@ -35,13 +35,13 @@ namespace CoEvents.Async
         //private AsyncToken() { }
         public void Yield()
         {
-            if (Status == AsyncStatus.Completed) throw new InvalidOperationException();
+            if (Status == AsyncStatus.Completed) throw new InvalidOperationException("尝试挂起已经结束的任务是无效的");
             Status = AsyncStatus.Yield;
             node.Yield();
         }
         public void Continue()
         {
-            if (Status == AsyncStatus.Completed) throw new InvalidOperationException();
+            if (Status == AsyncStatus.Completed) throw new InvalidOperationException("尝试取消已经结束的任务是无效的");
             Status = AsyncStatus.Pending;
             node.Continue();
         }

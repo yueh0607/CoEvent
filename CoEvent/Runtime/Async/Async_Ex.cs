@@ -37,7 +37,9 @@ namespace CoEvents.Async
             }
         }
 
-        public static CoTaskCompleted CompletedTask => new CoTaskCompleted();
+
+        private static CoTaskCompleted completedTask = new CoTaskCompleted();
+        public static ref CoTaskCompleted CompletedTask => ref completedTask;
 
 
         /// <summary>
@@ -256,11 +258,12 @@ namespace CoEvents.Async
         /// <param name="task"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public static void WithToken(this CoTask task, out AsyncToken token)
+        public static CoTask WithToken(this CoTask task, out AsyncToken token)
         {
             var tok = new AsyncToken();
             tok.node = task.Token;
             token = tok;
+            return task;
         }
 
         /// <summary>
@@ -269,11 +272,12 @@ namespace CoEvents.Async
         /// <param name="task"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public static void WithToken<T>(this CoTask<T> task, out AsyncToken token)
+        public static CoTask<T> WithToken<T>(this CoTask<T> task, out AsyncToken token)
         {
             var tok = new AsyncToken();
             tok.node = task.Token;
             token = tok;
+            return task;
         }
 
     }

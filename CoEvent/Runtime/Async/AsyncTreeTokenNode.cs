@@ -7,9 +7,13 @@
 
 namespace CoEvents.Async.Internal
 {
-    public class AsyncTreeTokenNode
+    public class AsyncTreeTokenNode:IAuthorization
     {
 
+        /// <summary>
+        /// 授权状态，代表当前任务是否被挂起，也决定了状态机是否能够继续前进
+        /// </summary>
+        public bool Authorization { get; internal set; } = true;
         //当前MethodBuilder执行的任务
         public IAsyncTokenProperty Current;
 
@@ -24,42 +28,34 @@ namespace CoEvents.Async.Internal
 
         public void Yield()
         {
+            Authorization = false;
             //非Builder任务则空
-            if (Current == Root)
-            {
-                Current.Authorization = false;
-                // UnityEngine.Debug.Log($"{((Unit)Current).ID}-SetFalse,TaskToken:{Current.Token.ID}");
-            }
-            else
+            if (Current != Root)
             {
                 this.Current.Token?.Yield();
             }
         }
         public void Continue()
         {
-            if (Current == Root)
+            Authorization = true;
+            if (Current != Root)
             {
-
-                Current.Authorization = true;
-            }
-            else
-            {
-                this.Current.Token?.Yield();
+                this.Current.Token?.Continue();
             }
 
         }
         public void Cancel()
         {
-
+            Authorization = false;
             if (Current == Root)
             {
-                Current.Authorization = false;
+               
                 Current?.SetCancel();
-                //Root.SetException(new AsyncTokenCancelException());
+
             }
             else
             {
-                this.Current.Token?.Yield();
+
                 this.Current.Token?.Cancel();
             }
 
