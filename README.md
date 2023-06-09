@@ -95,18 +95,19 @@ using CoEvent.Async;
    public async CoTask mTest()
     {
     //等待600帧
-        await Async.WaitForFrame(600);
+        await CoTask.WaitForFrame(600);
         Debug.Log("Hha");
         //等待3秒
-        await Async.Delay(3);
+        await CoTask.Delay(3);
         Debug.Log("111");
     }
 
 ```
-使用方式非常的简单，都内置于静态类Async内，当然也支持取消，挂起等，只需要对CoTask调用拓展方法WithToken即可取得令牌
+使用方式非常的简单，都内置于静态类Async内，当然也支持取消，挂起等，只需要对CoTask调用拓展方法WithToken即可取得令牌,和UniTask与ETTask最大的不同在于无需手动传递令牌，令牌自动维护。
 ```csharp
 mTest().WithToken(out var token);
 token.Yield();
+token.Continue();
 ```
 
 
@@ -124,7 +125,7 @@ public class Test : MonoBehaviour
 
     private async CoTask Stt()
     {
-        await Async.CompletedTask;
+        await CoTask.CompletedTask;
     }
 
     private async CoTask StartAsync()
