@@ -9,9 +9,11 @@ CoEvent是一个参数和调用类型安全的轻量级事件系统。本着简�
 2.单线程异步（如果不喜欢可以单独删除Async文件夹相关内容，您还可以采用UniTask和ETTask等，甚至使用Unity协程或回调方式）
 3.简单池管理器（如果不需要可以在CoEvent类里取消实例化）
 ## 更新计划
-- 适配async到Addressable(已支持)，YooAsset(未支持，可以参考ETTask接入)。
+- 适配async到Addressable(已支持)，YooAsset(目前未适配，可以参考ETTask接入)。
 - RPC支持
-- FSM/BehaviourTree支持
+- 计划适配CoTask与Task/IEnumerator的互相转换
+- 计划提高CoTask性能
+- 计划优化AsyncToken内存占用
 
 ## 协变事件系统的使用
 
