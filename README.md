@@ -4,16 +4,23 @@ CoEvent是一个参数和调用类型安全的轻量级事件系统。本着简�
 
 目前了解的支持平台有.NET CORE和Unity3D 2021.1 OR NEWER。
 理论上版本更低的Unity3D也能实现(可能在后续版本提供支持)，不过没有提供原生的UnsafeUtility.As，可以自己实现一个替换上去。
+
+另外我承认这个Aysnc部分效率低于UniTask，GC高于UniTask，但是请不要随便语言攻击我，这个Task的优势不是性能，而是简单，还有取消令牌的自动处理，谁都不会缺那点性能和GC。
+
 ## 目前支持的功能
-1.协变事件系统 （核心）
-2.单线程异步（如果不喜欢可以单独删除Async文件夹相关内容，您还可以采用UniTask和ETTask等，甚至使用Unity协程或回调方式）
-3.简单池管理器（如果不需要可以在CoEvent类里取消实例化）
+### 1.协变事件系统CoEvent(核心)
+    1.参数类型约束，相对于参数推断类型有很大优势，不会错判，便于协作查找定义
+    2.支持带返回值不带返回值两种调用类型
+    3.与异步模块完美兼容
+### 2.单线程异步CoTask(如果需要替换为UniTask可以删除整个文件夹)
+    1. 支持单线程异步
+    2. 支持await协程，CoTask转协程，已经用协程的项目零成本切换
+    3. 支持Dotween，Addressable的等待
+    4. 支持接入更多新的等待，学习成本极低。
+    5. 支持取消令牌自动传递，无需手动传递取消令牌，支持挂起和继续。
 ## 更新计划
-- 适配async到Addressable(已支持)，YooAsset(目前未适配，可以参考ETTask接入)。
 - RPC支持
-- 计划适配CoTask与Task/IEnumerator的互相转换
 - 计划提高CoTask性能
-- 计划优化AsyncToken内存占用
 
 ## 协变事件系统的使用
 
@@ -82,7 +89,7 @@ public class Test : MonoBehaviour
 
 
 
-## 单线程异步的使用
+## 单线程异步CoTask的使用
 
 CoEvent提供了一种极佳的方式来处理回调等异步逻辑，您如果使用过ETTask和UniTsak就会明白该方案的优越性，CoEvent实现了一个低GC的引用Task，且为单线程，不存在与Unity主线程资源交互的回调地狱。
 
