@@ -14,18 +14,18 @@ CoTask supports await coroutines, supports CoTask to coroutines, supports Task, 
 ### 1.Covariant Event System CoEvent (Core)
 
 ```c#
-1.参数类型约束，相对于参数推断类型有很大优势，不会错判，便于协作查找定义
-2.支持带返回值不带返回值两种调用类型
-3.与异步模块完美兼容
+1. Parameter type constraints have significant advantages over parameter inference types, avoiding misjudgment and facilitating collaborative search and definition
+2. Supports two call types with and without return values
+3. Perfect compatibility with asynchronous modules
 ```
 ### 2.Single thread asynchronous CoTask (can delete the whole folder if you need to replace with UniTask, etc.)
 
 ```c#
-1. 支持单线程异步
-2. 支持await协程，CoTask转协程，已经用协程的项目零成本切换
-3. 支持Dotween，Addressable的等待
-4. 支持接入更多新的等待，学习成本极低。
-5. 支持取消令牌自动传递，无需手动传递取消令牌，支持挂起和继续。
+1. Support single thread asynchronous
+2. Support Await process, CoTask transfer process, and zero cost switching of projects that have already used the process
+3. Support waiting for Dotween and Addressable
+4. Support access to more new waiting devices, with extremely low learning costs.
+5. Support automatic transmission of cancellation tokens, without the need for manual transmission of cancellation tokens, and support suspension and continuation.
 ```
 ## II. Update Plan
 - RPC remote invocation support
@@ -39,8 +39,8 @@ CoTask supports await coroutines, supports CoTask to coroutines, supports Task, 
 
 
 ```c#
-在Unity2021及以上使用跳过这一步
-如果在NET CORE使用请定位错误信息并根据提示修改宏定义。
+Skip this step when using Unity2021 and above
+If using NET CORE, locate the error message and modify the macro definition according to the prompts.
 ```
 2). Event definition
 
@@ -48,10 +48,9 @@ There are two interfaces for defining events. ISendEvent does not have a return 
 
 
 ```csharp
-//这一部分如果涉及多人开发，您可以把所有事件放在一个文件夹下，也可也放在事件的最相关处，这样做可以方便查阅
-
-public interface MyEvent: ISendEvent<参数类型...>
-public interface MyEvent: ICallEvent<参数类型...返回值类型>
+//If this section involves multiple developers, you can place all the events in one folder or also in the most relevant part of the event, which can be easily consulted
+public interface MyEvent: ISendEvent<Type of parameter...>
+public interface MyEvent: ICallEvent<Type of parameter...Type of returnValue>
 ```
 
 3). Registration and Cancellation Event
@@ -60,10 +59,11 @@ Send and call can only be performed after registration
 
 
 ``` csharp
-this.Operator<消息类型接口>().Subcribe(MyAction);
+this.Operator<Message Type Interface>().Subcribe(MyAction);
 
-//请注意，C#的委托闭包问题，也就是说如果您不取消事件，委托内被提取的引用对象将不会被GC自动回收，这是C#委托常见的一个内存泄漏陷阱。这是一个几乎全部事件系统都存在的问题。
-this.Operator<消息类型接口>().UnSubcribe(MyAction);
+//Please note that the delegation closure problem of C # means that if you do not cancel the event, the extracted reference objects in the delegation will not be automatically recycled by GC. This is a common Memory leak trap of C # delegation. This is a problem that exists in almost all event systems.
+
+this.Operator<Message Type Interface>().UnSubcribe(MyAction);
 ```
 
 4). Call and send
@@ -73,9 +73,9 @@ this.Operator<消息类型接口>().UnSubcribe(MyAction);
 //调用全部
 this.Operator<消息类型接口>().Send(...参数们);
 //调用全部
-var results = this.Operator<消息类型接口>().Call(...参数们);
+var results = this.Operator<Message Type Interface>().Call(...parameters);
 //调用第一个
-var result = this.Operator<消息类型接口>().CallFirst(参数们);
+var result = this.Operator<Message Type Interface>().CallFirst(..parameters);
 ```
 
 5).Routine
@@ -121,13 +121,13 @@ Be careful to use void as the return value, as this will result in the System. T
 ```csharp
 using CoEvent.Async;
 
-    //可等待的任务
+   //Waitable Task
    public async CoTask mTest()
     {
-    //等待600帧
+    	//Wait 600 frame
         await CoTask.WaitForFrame(600);
         Debug.Log("Hha");
-        //等待3秒
+        //wait 3 seconds
         await CoTask.Delay(3);
         Debug.Log("111");
     }
@@ -160,19 +160,19 @@ The usage is very simple. It supports operations such as cancel, suspend, and co
 
 
 ```csharp
-//取得令牌
+//Get Token
 mTest().WithToken(out var token);
-//暂停
+//Pause
 token.Yield();
-//继续
+//Continue
 token.Continue();
 
-//取消
+//Cancel
 token.OnCanceled +=()=>
 {
-    Debug.Log("任务取消后的处理");
+    Debug.Log("Handling after task cancellation");
 }
-//取消任务
+//Cancel Task
 token.Cancel();
 ```
 
@@ -227,27 +227,27 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
 
-//引入命名空间
+//using namespace
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
-//选一个合适的命名空间，能访问都可以
+//Choose a suitable namespace that can be accessed
 namespace CoEvents.Async
 {
-    //静态类，定义拓展方法
+    //Static class, defining extension methods
     public static class AddressableEx 
     {
-        //创建GetAwaiter拓展方法，向指定完成回调里加入SetResult委托（如果入池则消除重复GC）
+        //Create a GetAwaiter extension method and add a SetResult delegate to the specified completion callback (eliminate duplicate GC if pooled)
         public static CoTask<AsyncOperationHandle> GetAwaiter(this AsyncOperationHandle handle)
         {
-            //创建Task
+            //create Task
             var task = CoTask<AsyncOperationHandle>.Create();
-            //绑定回调
+            //bind callback
             handle.Completed += task.SetResult;
-            //返回任务
+            //return task
             return task;
         }
-        //泛型支持
+        //generic type support
         public static CoTask<AsyncOperationHandle<T>> GetAwaiter<T>(this AsyncOperationHandle<T> handle)
         {
             var task = CoTask<AsyncOperationHandle<T>>.Create();
@@ -266,17 +266,18 @@ In the CoTask class, you can call these methods directly
 
 
 ```
-//延迟一秒
+//delay on seconds
 CoTask.Delay(1);
-//转协程
+//to unity coroutine
 CoTask.ToCoroutine(async ()=>
 {
 	yield return new WaitForSceonds();
 })
-//已经完成的Task
+//a completed task
 CoTask.CompletedTask
 
-//更多不再介绍...
+//No more introduction
+	
 ```
 
 9). Create Cotask without calling
@@ -285,7 +286,7 @@ CoTask.CompletedTask
 ```
 Func<CoTask> task = async ()=>
 {
-	//这个lambda可以是异步方法，这样就获取了这个CoTask
+	//This lambda can be an asynchronous method, which obtains the CoTask
 }
 ```
 
