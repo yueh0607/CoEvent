@@ -1,12 +1,17 @@
-﻿using CoEvents.Async;
+﻿
+
+//打开这行注释以支持DoTween完成的等待
+
+#define CoEvent_Async_AsyncOperation_Enable
+
+#if CoEvent_Async_AsyncOperation_Enable
+
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace CoEvents.Async
 {
-#if UNITY_2017_1_OR_NEWER
+
     public static class AsyncOperationEx
     {
         public static CoTask<AsyncOperation> GetAwaiter(this AsyncOperation operation)
@@ -31,7 +36,7 @@ namespace CoEvents.Async
         }
 
 
-       
+
     }
-#endif
 }
+#endif

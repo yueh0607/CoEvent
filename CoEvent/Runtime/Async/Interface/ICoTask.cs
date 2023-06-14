@@ -1,11 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-namespace CoEvents
+﻿namespace CoEvents
 {
-    public interface ICoTask 
+    public interface ICoTask
     {
-     
+
     }
 }

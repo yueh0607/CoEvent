@@ -1,7 +1,5 @@
 ﻿using CoEvents;
 using CoEvents.Async;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 

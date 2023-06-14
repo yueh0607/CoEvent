@@ -1,6 +1,9 @@
-﻿//#define CoEvent_Addressable_Enable
+﻿
+//打开下面这行注释即可支持Addressable操作完成的等待
 
-#if CoEvent_Addressable_Enable
+//#define CoEvent_Addressable_Enable
+
+#if CoEvent_Async_Addressable_Enable
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;

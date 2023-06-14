@@ -40,7 +40,7 @@ namespace CoEvents
                 queue.Enqueue(item);
             }
         }
-            
+
 
         public T Allocate<T>()
         {
@@ -60,9 +60,9 @@ namespace CoEvents
         private Dictionary<int, Func<GameObject>> createFuncs = new Dictionary<int, Func<GameObject>>();
         private Dictionary<int, Action<GameObject>> destroyActions = new Dictionary<int, Action<GameObject>>();
 
-        public void SetGameObjectBehaviour(int key,Func<GameObject> onCreate,Action<GameObject> onDestroy=null)
+        public void SetGameObjectBehaviour(int key, Func<GameObject> onCreate, Action<GameObject> onDestroy = null)
         {
-            if(createFuncs.ContainsKey(key))
+            if (createFuncs.ContainsKey(key))
             {
                 createFuncs[key] = onCreate;
                 destroyActions[key] = onDestroy;
@@ -73,11 +73,11 @@ namespace CoEvents
                 destroyActions.Add(key, onDestroy);
             }
         }
-        
+
         public GameObject AllocateGameObject(int key)
         {
             if (!createFuncs.ContainsKey(key)) throw new InvalidOperationException("Please set CreateFunc before call Allocate");
-            if(!gos.ContainsKey(key))
+            if (!gos.ContainsKey(key))
             {
                 gos.Add(key, new Queue<GameObject>());
             }
@@ -86,7 +86,7 @@ namespace CoEvents
             return gos[key].Dequeue();
         }
 
-        public void RecycleGameObject(int key,GameObject go)
+        public void RecycleGameObject(int key, GameObject go)
         {
             if (!createFuncs.ContainsKey(key)) throw new InvalidOperationException("Please set DestroyAction before call Recycle");
             if (!gos.ContainsKey(key))

@@ -14,7 +14,7 @@ namespace CoEvents.Async
     /// <summary>
     /// 异步任务接口
     /// </summary>
-    public interface IAsyncTask : ICriticalAwaiter,ICoTask
+    public interface IAsyncTask : ICriticalAwaiter, ICoTask
     {
         /// <summary>
         /// 结束当前任务

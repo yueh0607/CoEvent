@@ -10,7 +10,7 @@ namespace CoEvents.Async.Internal
     /// <summary>
     /// 使用该接口统一支持异步令牌
     /// </summary>
-    public interface IAsyncTokenProperty 
+    public interface IAsyncTokenProperty
     {
         AsyncTreeTokenNode Token { get; internal set; }
 

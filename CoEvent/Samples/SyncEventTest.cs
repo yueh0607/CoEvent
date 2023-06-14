@@ -1,6 +1,4 @@
 ﻿using CoEvents;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -8,7 +6,7 @@ using UnityEngine;
 public interface IMyEvent : ISendEvent<int, string> { }
 
 //带返回值
-public interface ICustomCallEvent:ICallEvent<int, string> { }
+public interface ICustomCallEvent : ICallEvent<int, string> { }
 
 
 public class SyncEventTest : MonoBehaviour
@@ -18,7 +16,7 @@ public class SyncEventTest : MonoBehaviour
     {
         //*********************注册/*****************************************
         //1.委托注册
-        this.Operator<IMyEvent>().Subscribe((x, y) => 
+        this.Operator<IMyEvent>().Subscribe((x, y) =>
         {
             Debug.Log(x);
             //Do something here.
@@ -41,7 +39,7 @@ public class SyncEventTest : MonoBehaviour
         //快速开启协程
         //CoEvent.Mono.StartCoroutine()
 
-        
+
         //*****************************************
 
 
@@ -56,7 +54,7 @@ public class SyncEventTest : MonoBehaviour
     }
 
 
-    void Aaaa(int x,string y)
+    void Aaaa(int x, string y)
     {
         Debug.Log(x);
     }

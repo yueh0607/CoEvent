@@ -1,6 +1,4 @@
 ﻿using CoEvents.Async;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CancelTest : MonoBehaviour
@@ -15,7 +13,7 @@ public class CancelTest : MonoBehaviour
     }
 
 
-   
+
 
     void Start()
     {

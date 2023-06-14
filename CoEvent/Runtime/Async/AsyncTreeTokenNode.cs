@@ -10,7 +10,7 @@ using System.Runtime.CompilerServices;
 
 namespace CoEvents.Async.Internal
 {
-    public class AsyncTreeTokenNode:IAuthorization
+    public class AsyncTreeTokenNode : IAuthorization
     {
 
         /// <summary>
@@ -23,26 +23,26 @@ namespace CoEvents.Async.Internal
 
         //MethodBuilder代表的任务
         public IAsyncTokenProperty Root;
-        //[DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
         public AsyncTreeTokenNode(IAsyncTokenProperty Root, IAsyncTokenProperty Current)
         {
             this.Current = Current;
             this.Root = Root;
         }
-        //[DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Yield()
         {
             Authorization = false;
             //非Builder任务则空
-            if (Current != Root)this.Current.Token?.Yield();
+            if (Current != Root) this.Current.Token?.Yield();
         }
-        //[DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Continue()
         {
             Authorization = true;
-            if (Current != Root)this.Current.Token?.Continue();
+            if (Current != Root) this.Current.Token?.Continue();
         }
-        //[DebuggerHidden,MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Cancel()
         {
             Authorization = false;
@@ -54,7 +54,7 @@ namespace CoEvents.Async.Internal
             Current.SetCancel();
         }
 
-        //[DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool IsRunning() => Authorization;
     }
 

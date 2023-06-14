@@ -1,18 +1,22 @@
-﻿using System;
+﻿
+//打开这行注释以支持CoTask与协程的转换
+#define CoEvent_Async_CoTask2Coroutine_Enable
+
+
+
+#if CoEvent_Async_CoTask2Coroutine_Enable
+
 using System.Collections;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
-using UnityEngine;
 
 namespace CoEvents.Async
 {
-    public static partial class CoTask_Ex
+    public static class CoTask2Coroutine
     {
 
 
-        //[DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static CoTask GetAwaiter(this IEnumerator enumerator)
         {
             CoTask task = CoTask.Create();
@@ -29,3 +33,4 @@ namespace CoEvents.Async
 
     }
 }
+#endif

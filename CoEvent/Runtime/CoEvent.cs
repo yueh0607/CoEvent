@@ -1,8 +1,6 @@
 ﻿using CoEvents.Internal;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using UnityEditor;
 using UnityEngine;
 
 namespace CoEvents
@@ -37,11 +35,11 @@ namespace CoEvents
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
         public static void InitPublisher()
         {
-            if(Initialized) return;
+            if (Initialized) return;
             GameObject publisher = new GameObject("CoEventPublisher");
             GameObject.DontDestroyOnLoad(publisher);
             monoPublisher = publisher.AddComponent<CoEventPublisher>();
-            Initialized= true;
+            Initialized = true;
         }
 
         /// <summary>

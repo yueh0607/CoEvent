@@ -1,8 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using CoEvents.Async;
 using UnityEngine;
-using CoEvents;
-using CoEvents.Async;
 
 public class YieldTest : MonoBehaviour
 {

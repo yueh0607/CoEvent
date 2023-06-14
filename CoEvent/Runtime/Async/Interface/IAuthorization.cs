@@ -10,6 +10,6 @@ namespace CoEvents.Async
 
     public interface IAuthorization
     {
-        bool Authorization { get;  }
+        bool Authorization { get; }
     }
 }

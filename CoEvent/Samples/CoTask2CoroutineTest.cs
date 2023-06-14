@@ -1,6 +1,5 @@
 ﻿using CoEvents.Async;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CoTask2Coroutine : MonoBehaviour

@@ -1,12 +1,8 @@
-﻿using CoEvents;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System;
 
 namespace CoEvents
 {
-    public static class Extensions_Condition 
+    public static class Extensions_Condition
     {
         public class ConditionMotor
         {
