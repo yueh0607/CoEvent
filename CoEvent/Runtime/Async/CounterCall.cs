@@ -149,7 +149,7 @@ namespace CoEvents.Async
         /// </summary>
         public Action<T> PlusOne
         {
-            [DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
+            //[DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
                 if (plusOne == null)

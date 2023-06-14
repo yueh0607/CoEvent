@@ -9,7 +9,7 @@ namespace CoEvents
 {
     public static class CoEventManagerEx1
     {
-        [DebuggerHidden]
+        //[DebuggerHidden]
         public static ICoVarOperator<EventType> Operator<EventType>(this object cov) where EventType : ISendEventBase
         {
             Type type = typeof(EventType);
@@ -20,7 +20,7 @@ namespace CoEvents
     }
     public static class CoEventManagerEx2
     {
-        [DebuggerHidden]
+        //[DebuggerHidden]
         public static ICoVarOperator<EventType> Operator<EventType>(this object cov) where EventType : ICallEventBase
         {
             Type type = typeof(EventType);

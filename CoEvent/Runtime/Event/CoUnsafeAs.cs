@@ -7,7 +7,7 @@ namespace CoEvents
 
     internal static class CoUnsafeAs
     {
-        [DebuggerHidden]
+        //[DebuggerHidden]
         internal static TTo As<TFrom, TTo>(ref TFrom t)
         {
 #if UNITY_2020_1_OR_NEWER

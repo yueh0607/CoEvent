@@ -6,10 +6,11 @@
  */
 
 
+using System;
 using System.Collections.Generic;
 namespace CoEvents.Async
 {
-    public static partial class Async
+    public partial class CoTask
     {
         /// <summary>
         /// 延迟指定秒数
@@ -22,7 +23,17 @@ namespace CoEvents.Async
             timer.EndTime = seconds;
             return timer;
         }
-
+        /// <summary>
+        /// 延迟指定时间
+        /// </summary>
+        /// <param name="seconds"></param>
+        /// <returns></returns>
+        public static CoTaskTimer Delay(TimeSpan span)
+        {
+            var timer = CoTaskTimer.Create();
+            timer.EndTime = (float)span.TotalSeconds;
+            return timer;
+        }
         public static async CoTask WaitForFrame(int count = 1)
         {
             if (count <= 0)
@@ -63,7 +74,7 @@ namespace CoEvents.Async
             {
 
                 task.OnTaskCompleted += counterCall.PlusOne;
-                task.Coroutine();
+                task.Discard();
             }
             return asyncTask;
         }
@@ -89,7 +100,7 @@ namespace CoEvents.Async
             foreach (var task in tasks)
             {
                 task.OnTaskCompleted += counterCall.PlusOne;
-                task.Coroutine();
+                task.Discard();
             }
             return asyncTask;
         }
@@ -115,7 +126,7 @@ namespace CoEvents.Async
             foreach (var task in tasks)
             {
                 task.OnTaskCompleted += counterCall.PlusOne;
-                task.Coroutine();
+                task.Discard();
             }
             return asyncTask;
         }
@@ -141,7 +152,7 @@ namespace CoEvents.Async
             foreach (var task in tasks)
             {
                 task.OnTaskCompleted += counterCall.PlusOne;
-                task.Coroutine();
+                task.Discard();
             }
             return asyncTask;
         }
@@ -167,7 +178,7 @@ namespace CoEvents.Async
             //绑定计数器，仅第一次存在GC
             foreach (var task in tasks)
             {
-                task.Coroutine();
+                task.Discard();
                 task.OnTaskCompleted += counterCall.PlusOne;
             }
 
@@ -193,7 +204,7 @@ namespace CoEvents.Async
             //绑定计数器
             foreach (var task in tasks)
             {
-                task.Coroutine();
+                task.Discard();
                 task.OnTaskCompleted += counterCall.PlusOne;
             }
 
@@ -220,7 +231,7 @@ namespace CoEvents.Async
             //绑定计数器，仅第一次存在GC
             foreach (var task in tasks)
             {
-                task.Coroutine();
+                task.Discard();
                 task.OnTaskCompleted += counterCall.PlusOne;
             }
 
@@ -247,38 +258,14 @@ namespace CoEvents.Async
             //绑定计数器，仅第一次存在GC
             foreach (var task in tasks)
             {
-                task.Coroutine();
+                task.Discard();
                 task.OnTaskCompleted += counterCall.PlusOne;
             }
             return asyncTask;
         }
-        /// <summary>
-        /// 为指定异步任务设置令牌，可以取消和挂起
-        /// </summary>
-        /// <param name="task"></param>
-        /// <param name="token"></param>
-        /// <returns></returns>
-        public static CoTask WithToken(this CoTask task, out AsyncToken token)
-        {
-            var tok = new AsyncToken();
-            tok.node = task.Token;
-            token = tok;
-            return task;
-        }
 
-        /// <summary>
-        /// 为指定异步任务设置令牌，可以取消和挂起
-        /// </summary>
-        /// <param name="task"></param>
-        /// <param name="token"></param>
-        /// <returns></returns>
-        public static CoTask<T> WithToken<T>(this CoTask<T> task, out AsyncToken token)
-        {
-            var tok = new AsyncToken();
-            tok.node = task.Token;
-            token = tok;
-            return task;
-        }
+
+
 
     }
 }

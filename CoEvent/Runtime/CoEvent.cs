@@ -31,6 +31,8 @@ namespace CoEvents
         //初始化标记
         internal static bool Initialized { get; private set; } = false;
 
+        private static CoEventPublisher monoPublisher = null;
+
         //自动创建Publisher发布简单生命周期
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
         public static void InitPublisher()
@@ -38,7 +40,7 @@ namespace CoEvents
             if(Initialized) return;
             GameObject publisher = new GameObject("CoEventPublisher");
             GameObject.DontDestroyOnLoad(publisher);
-            publisher.AddComponent<CoEventPublisher>();
+            monoPublisher = publisher.AddComponent<CoEventPublisher>();
             Initialized= true;
         }
 
@@ -58,7 +60,7 @@ namespace CoEvents
 
         public static Action<Exception> ExceptionHandler = (x) => throw x;
 
-
+        public static MonoBehaviour Mono => monoPublisher;
         public static ICoVarOperator<IUpdate> Update { get; } = Instance.Operator<IUpdate>();
         public static ICoVarOperator<ILateUpdate> LateUpdate { get; } = Instance.Operator<ILateUpdate>();
         public static ICoVarOperator<IFixedUpdate> FixedUpdate { get; } = Instance.Operator<IFixedUpdate>();

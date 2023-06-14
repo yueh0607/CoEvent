@@ -6,13 +6,16 @@ using System.Runtime.CompilerServices;
 namespace CoEvents.Async
 {
     [AsyncMethodBuilder(typeof(CoTaskBuilder))]
-    public class CoTask : IAsyncTask, IAsyncTokenProperty, ICoTask
+    public partial class CoTask : IAsyncTask, IAsyncTokenProperty, ICoTask
     {
         //在结束时调用，无论是否成功
         public event Action OnTaskCompleted = null;
         private Action continuation = null;
+      
+
+
         public bool IsCompleted { get; set; } = false;
-        [DebuggerHidden]
+        //[DebuggerHidden]
         public static CoTask Create()
         {
             CoTask task = null;
@@ -27,11 +30,11 @@ namespace CoEvents.Async
 
             return task;
         }
-        [DebuggerHidden]
+        //[DebuggerHidden]
         public static void Recycle(CoTask task)
         {
             task.Token.Authorization = false;
-
+      
             if (CoEvent.Pool != null) return;
             CoEvent.Pool?.Recycle(typeof(CoTask), task);
         }
@@ -60,21 +63,21 @@ namespace CoEvents.Async
 
         #endregion
 
-        [DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        //[DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void GetResult() { }
 
-        [DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        //[DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void SetException(Exception exception)
         {
             CoEvent.ExceptionHandler?.Invoke(exception);
             SetResultMethod();
         }
-        [DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void SetCancel()
         {
             SetResultMethod();
         }
-        [DebuggerHidden]
+        //[DebuggerHidden]
         private void SetResultMethod()
         {
             if (Token.Authorization)
@@ -90,13 +93,13 @@ namespace CoEvents.Async
             Recycle(this);
         }
 
-        [DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        //[DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void OnCompleted(Action continuation) => UnsafeOnCompleted(continuation);
-        [DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        //[DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void UnsafeOnCompleted(Action continuation) => this.continuation = continuation;
 
 
-        [DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        //[DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
         public CoTask GetAwaiter() => this;
 
     }
@@ -107,10 +110,12 @@ namespace CoEvents.Async
     {
         //在结束时调用，无论是否成功
         public event Action<T> OnTaskCompleted = null;
+       
+
         private Action continuation = null;
         public bool IsCompleted { get; set; } = false;
         public T Result { get; set; } = default;
-        [DebuggerHidden]
+        //[DebuggerHidden]
         public static CoTask<T> Create()
         {
             CoTask<T> task = null;
@@ -126,7 +131,7 @@ namespace CoEvents.Async
 
             return task;
         }
-        [DebuggerHidden]
+        //[DebuggerHidden]
         public static void Recycle(CoTask<T> task)
         {
             task.Token.Authorization = false;
@@ -158,24 +163,25 @@ namespace CoEvents.Async
 
         #endregion
 
-        [DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        //[DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
         public T GetResult()
         {
             return Result;
         }
 
-        [DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        //[DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void SetException(Exception exception)
         {
             CoEvent.ExceptionHandler?.Invoke(exception);
             SetResultMethod(default);
         }
-        [DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        //[DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void SetCancel()
         {
+       
             SetResultMethod(default);
         }
-        [DebuggerHidden]
+        //[DebuggerHidden]
         private void SetResultMethod(T result)
         {
             if (Token.Authorization)
@@ -204,18 +210,18 @@ namespace CoEvents.Async
                 return unsafeSetResult;
             }
         }
-        [DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        //[DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void UnsafeSetResultMethod()
         {
             SetResult(this.Result);
         }
-        [DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        //[DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void OnCompleted(Action continuation) => UnsafeOnCompleted(continuation);
-        [DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        //[DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void UnsafeOnCompleted(Action continuation) => this.continuation = continuation;
 
 
-        [DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        //[DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
         public CoTask<T> GetAwaiter() => this;
 
     }
@@ -223,10 +229,9 @@ namespace CoEvents.Async
 
     public class CoTaskTimer : IAsyncTask, IAsyncTokenProperty, ICoTask
     {
-
         private Action continuation = null;
         public bool IsCompleted { get; set; } = false;
-        [DebuggerHidden]
+        //[DebuggerHidden]
         public static CoTaskTimer Create()
         {
             CoTaskTimer task = null;
@@ -245,7 +250,7 @@ namespace CoEvents.Async
 
             return task;
         }
-        [DebuggerHidden]
+        //[DebuggerHidden]
         public static void Recycle(CoTaskTimer task)
         {
             task.Token.Authorization = false;
@@ -257,6 +262,7 @@ namespace CoEvents.Async
 
 
         private Action setResult = null;
+        //[DebuggerHidden]
         public Action SetResult
         {
             get
@@ -272,7 +278,9 @@ namespace CoEvents.Async
         /// <summary>
         /// 异步令牌，与AsyncToken作用相同
         /// </summary>
+        //[DebuggerHidden]
         AsyncTreeTokenNode IAsyncTokenProperty.Token { get => Token; set => Token = value; }
+        //[DebuggerHidden]
         public AsyncTreeTokenNode Token { get; internal set; }
 
 
@@ -294,21 +302,21 @@ namespace CoEvents.Async
                 }
             }
         }
-        [DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        //[DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void GetResult() { }
 
-        [DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        //[DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void SetException(Exception exception)
         {
             CoEvent.ExceptionHandler?.Invoke(exception);
             SetResultMethod();
         }
-        [DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        //[DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void SetCancel()
         {
             SetResultMethod();
         }
-        [DebuggerHidden]
+        //[DebuggerHidden]
         private void SetResultMethod()
         {
             if (Token.Authorization)
@@ -321,13 +329,13 @@ namespace CoEvents.Async
             Recycle(this);
         }
 
-        [DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        //[DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void OnCompleted(Action continuation) => UnsafeOnCompleted(continuation);
-        [DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        //[DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void UnsafeOnCompleted(Action continuation) => this.continuation = continuation;
 
 
-        [DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        //[DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
         public CoTaskTimer GetAwaiter()
         {
             CoEvent.Instance.Operator<IUpdate>().Subscribe(Update);
@@ -339,9 +347,11 @@ namespace CoEvents.Async
     {
         //在结束时调用，无论是否成功
         public event Action OnTaskCompleted = null;
+
+
         private Action continuation = null;
         public bool IsCompleted { get; set; } = false;
-        [DebuggerHidden]
+        //[DebuggerHidden]
         public static CoTaskUpdate Create()
         {
             CoTaskUpdate task = null;
@@ -360,7 +370,7 @@ namespace CoEvents.Async
 
             return task;
         }
-        [DebuggerHidden]
+        //[DebuggerHidden]
         public static void Recycle(CoTaskUpdate task)
         {
             task.Token.Authorization = false;
@@ -407,21 +417,22 @@ namespace CoEvents.Async
                 }
 
         }
-        [DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        //[DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void GetResult() { }
 
-        [DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        //[DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void SetException(Exception exception)
         {
             CoEvent.ExceptionHandler?.Invoke(exception);
             SetResultMethod();
         }
-        [DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        ////[DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void SetCancel()
         {
+
             SetResultMethod();
         }
-        [DebuggerHidden]
+        //[DebuggerHidden]
         private void SetResultMethod()
         {
             if (Token.Authorization)
@@ -437,13 +448,13 @@ namespace CoEvents.Async
             Recycle(this);
         }
 
-        [DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        //[DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void OnCompleted(Action continuation) => UnsafeOnCompleted(continuation);
-        [DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        //[DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void UnsafeOnCompleted(Action continuation) => this.continuation = continuation;
 
 
-        [DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        //[DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
         public CoTaskUpdate GetAwaiter() => this;
 
     }
@@ -453,17 +464,17 @@ namespace CoEvents.Async
     {
 
         public bool IsCompleted => true;
-        [DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        //[DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void GetResult() { }
-        [DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        //[DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void SetException(Exception exception)
         {
             CoEvent.ExceptionHandler?.Invoke(exception);
         }
 
-        [DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        //[DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
         public CoTaskCompleted GetAwaiter() => this;
-        [DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        //[DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void OnCompleted(Action continuation) { }
     }
 }

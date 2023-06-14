@@ -23,32 +23,39 @@ namespace CoEvents.Async.Internal
 
         //MethodBuilder代表的任务
         public IAsyncTokenProperty Root;
-        [DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        //[DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
         public AsyncTreeTokenNode(IAsyncTokenProperty Root, IAsyncTokenProperty Current)
         {
             this.Current = Current;
             this.Root = Root;
         }
-        [DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        //[DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Yield()
         {
             Authorization = false;
             //非Builder任务则空
             if (Current != Root)this.Current.Token?.Yield();
         }
-        [DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        //[DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Continue()
         {
             Authorization = true;
             if (Current != Root)this.Current.Token?.Continue();
         }
-        [DebuggerHidden,MethodImpl(MethodImplOptions.AggressiveInlining)]
+        //[DebuggerHidden,MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Cancel()
         {
             Authorization = false;
-            if (Current == Root)Current?.SetCancel();
-            else this.Current.Token?.Cancel();
+            if (Current != Root)
+            {
+                this.Current.Token?.Cancel();
+            }
+
+            Current.SetCancel();
         }
+
+        //[DebuggerHidden, MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public bool IsRunning() => Authorization;
     }
 
 }
