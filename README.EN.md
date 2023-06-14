@@ -1,5 +1,5 @@
 # CoEvent
-
+# [Chinese](https://github.com/yueh0607/CoEvent/edit/main/README.md)|[English](https://github.com/yueh0607/CoEvent/edit/main/README.EN.md)
 CoEvent is based on **Observer mode** **Event System**, it supports **Constraints on parameter type**, **Explicit event definition** in order to facilitate multi-person collaboration, compared with the event system based on integer and enumeration, it has great advantages, can prevent the misjudgment of parameter types, and can optimize the communication specifications between modules during collaboration.
 
 CoEvent supports the development of platforms above Unity3D 2021.1 and.NET core. (If you need more support, please contact the author)
