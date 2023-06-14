@@ -277,7 +277,7 @@ CoTask.CompletedTask
 
 9). 创建Cotask却不调用
 
-```
+```csharp
 Func<CoTask> task = async ()=>
 {
 	//这个lambda可以是异步方法，这样就获取了这个CoTask
