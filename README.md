@@ -1,7 +1,7 @@
 # CoEvent 
 
 
-# [Chinese](https://github.com/yueh0607/CoEvent/edit/main/README.md)|[English](https://github.com/yueh0607/CoEvent/edit/main/README.EN.md)
+# [Chinese](https://github.com/yueh0607/CoEvent/blob/main/README.md)|[English](https://github.com/yueh0607/CoEvent/blob/main/README.EN.md)
 CoEvent是一个基于**观察者模式**的**事件系统**，它支持**参数类型的约束**，**显式化事件定义**以便于多人协，相对于基于整型和枚举的事件系统有巨大优势，能防止参数类型误判，能优化协作时模块之间通信规范。
 
 CoEvent支持Unity3D 2021.1以上和.NETCORE平台的开发。(如果需要更多支持请联系作者)
