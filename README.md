@@ -137,7 +137,7 @@ using CoEvent.Async;
 
 您会遇到调用CoTask作为返回值时，出现警告波浪线的清空，您可以这样来消除警告。
 
-```c#
+```csharp
 mTest().Discrad();
 _ = mTest();
 ```
@@ -261,7 +261,7 @@ namespace CoEvents.Async
 
 在CoTask类中，可以直接调用这些方法
 
-```
+```csharp
 //延迟一秒
 CoTask.Delay(1);
 //转协程
