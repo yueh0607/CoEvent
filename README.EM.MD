@@ -1,5 +1,6 @@
 #CoEvent
-CoEvent is a * * event system * * based on * * Observer pattern * *, which supports * * parameter type constraints * *, * * explicit event definitions * * to facilitate multi person collaboration. Compared with the event system based on integer and enumeration, CoEvent has great advantages, can prevent parameter type misjudgment, and can optimize communication specifications between modules during collaboration.
+
+CoEvent is a ** event system ** based on ** Observer pattern * *, which supports * * parameter type constraints * *, * * explicit event definitions * * to facilitate multi person collaboration. Compared with the event system based on integer and enumeration, CoEvent has great advantages, can prevent parameter type misjudgment, and can optimize communication specifications between modules during collaboration.
 CoEvent supports the development of Unity3D 2021.1 or above and the. NETCORE platform. (If you need more support, please contact the author)
 CoTask supports await protocols, CoTask transfer protocols, Tasks, Addressable and Dotween solutions, and allows for easy access to more solutions. CoTask supports single threaded operations such as WebGL JS.
 ##1、 Functions and modules
