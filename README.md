@@ -9,9 +9,11 @@ CoEvent是一个参数和调用类型安全的轻量级事件系统。本着简�
 2.单线程异步（如果不喜欢可以单独删除Async文件夹相关内容，您还可以采用UniTask和ETTask等，甚至使用Unity协程或回调方式）
 3.简单池管理器（如果不需要可以在CoEvent类里取消实例化）
 ## 更新计划
-- 适配async到Addressable(已支持)，YooAsset(未支持，可以参考ETTask接入)。
+- 适配async到Addressable(已支持)，YooAsset(目前未适配，可以参考ETTask接入)。
 - RPC支持
-- FSM/BehaviourTree支持
+- 计划适配CoTask与Task/IEnumerator的互相转换
+- 计划提高CoTask性能
+- 计划优化AsyncToken内存占用
 
 ## 协变事件系统的使用
 
@@ -93,18 +95,19 @@ using CoEvent.Async;
    public async CoTask mTest()
     {
     //等待600帧
-        await Async.WaitForFrame(600);
+        await CoTask.WaitForFrame(600);
         Debug.Log("Hha");
         //等待3秒
-        await Async.Delay(3);
+        await CoTask.Delay(3);
         Debug.Log("111");
     }
 
 ```
-使用方式非常的简单，都内置于静态类Async内，当然也支持取消，挂起等，只需要对CoTask调用拓展方法WithToken即可取得令牌
+使用方式非常的简单，都内置于静态类Async内，当然也支持取消，挂起等，只需要对CoTask调用拓展方法WithToken即可取得令牌,和UniTask与ETTask最大的不同在于无需手动传递令牌，令牌自动维护。
 ```csharp
 mTest().WithToken(out var token);
 token.Yield();
+token.Continue();
 ```
 
 
@@ -122,7 +125,7 @@ public class Test : MonoBehaviour
 
     private async CoTask Stt()
     {
-        await Async.CompletedTask;
+        await CoTask.CompletedTask;
     }
 
     private async CoTask StartAsync()
